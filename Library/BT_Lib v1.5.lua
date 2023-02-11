@@ -228,7 +228,8 @@ function Library:CreateWindow(title, gameName)
     local CoverBT = Instance.new("Frame")
 
     Library:DraggingEnabled(coverTopHeader, Main)
-
+    Library:DraggingEnabled(openBT, ScreenGui)
+	
     ScreenGui.Name = LibName
     ScreenGui.Parent = game.CoreGui
     ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -253,7 +254,7 @@ function Library:CreateWindow(title, gameName)
     openBT.BorderSizePixel = 0
     openBT.Size = UDim2.new(0, 35, 0, 35)
     openBT.Image = "rbxassetid://11482100481"
-    openBT.Position = UDim2.new(0, 1, 0, 1)
+    openBT.Position = UDim2.new(0, 103, 0, -33)
     --openBT.ImageColor3 = Color3.fromRGB(0, 0, 0)
 	
     openBT.MouseLeave:Connect(function()
