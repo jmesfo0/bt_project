@@ -228,7 +228,6 @@ function Library:CreateWindow(title, gameName)
     local CoverBT = Instance.new("Frame")
 
     Library:DraggingEnabled(coverTopHeader, Main)
-    Library:DraggingEnabled(openBT, ScreenGui)
 	
     ScreenGui.Name = LibName
     ScreenGui.Parent = game.CoreGui
