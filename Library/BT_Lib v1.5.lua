@@ -1819,7 +1819,7 @@ function Library:CreateWindow(title, gameName)
     
                     local Value;
                     if Value == nil then
-                        Value = startVal
+                        Value = Slider.Value
                     end
 
                     sliderBtn.MouseButton1Down:Connect(function()
@@ -1912,7 +1912,7 @@ function Library:CreateWindow(title, gameName)
 					
 					function Slider:SetValue(Str)
 						Slider.Value = Str;
-						togName.Text = slidInf.." - "..Slider.Value
+						togName.Text = slidInf.." - "..tostring(Slider.Value and math.floor((Slider.Value / maxvalue) * (maxvalue - minvalue) + minvalue) or 0)
 						pcall(callback, Slider.Value)
 					end;
 					Options[Idx] = Slider
