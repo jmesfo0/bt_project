@@ -3124,7 +3124,7 @@ function Library:CreateWindow(title, gameName)
                     label.BorderSizePixel = 0
                     label.ClipsDescendants = true
                     label.Text = title
-                    label.Size = UDim2.new(1, 0, 0, 25)
+                    label.Size = UDim2.new(1, 0, 0, string.len(label.Text))
                     label.Font = Enum.Font.SourceSansBold
                     label.Text = "  "..title
                     label.RichText = true
@@ -3142,7 +3142,9 @@ function Library:CreateWindow(title, gameName)
                     if Theme.AccentColor == Color3.fromRGB(0,0,0) then
                         Utility:TweenObject(label, {TextColor3 = Color3.fromRGB(255,255,255)}, 0.2)
                     end 
-    
+					label:GetPropertyChangedSignal("Text"):Connect(function()
+						label.Size = UDim2.new(1, 0, 0, string.len(label.Text))
+					end)
                     coroutine.wrap(function()
                         while wait() do
                             label.BackgroundColor3 = Theme.AccentColor
