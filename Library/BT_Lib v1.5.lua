@@ -30,6 +30,11 @@ function Library:AttemptSave()
     end;
 end;
 
+function Library:GetTextBounds(Text, Font, Size, Resolution)
+    local Bounds = game:GetService('TextService'):GetTextSize(Text, Size, Font, Resolution or Vector2.new(1920, 1080))
+    return Bounds.X, Bounds.Y
+end;
+
 function Library:DraggingEnabled(frame, parent)
     local dragging = nil
     local dragInput = nil
@@ -1655,8 +1660,8 @@ function Library:CreateWindow(title, gameName)
                     slidTip = slidTip or "Slider tip here"
                     maxvalue = maxvalue
                     minvalue = minvalue or 0
-                    startVal = (math.clamp(Slider.Value, minvalue, maxvalue))
-                    if startVal > maxvalue then set = maxvalue end
+                    startVal = (math.clamp(startVal, minvalue, maxvalue))
+                    if startVal > maxvalue then startVal = maxvalue end
                     callback = callback or function() end
     
                     local sliderElement = Instance.new("TextButton")
@@ -3123,10 +3128,10 @@ function Library:CreateWindow(title, gameName)
                     label.BackgroundColor3 = Theme.AccentColor
                     label.BorderSizePixel = 0
                     label.ClipsDescendants = true
-                    label.Text = title
+                    label.Text = " "..title
                     label.Size = UDim2.new(1, 0, 0, 25)
                     label.Font = Enum.Font.SourceSansBold
-                    label.Text = "  "..title
+                    label.Text = title
                     label.RichText = true
                     label.TextColor3 = Theme.TextColor
                     Objects[label] = "TextColor3"
@@ -3142,18 +3147,22 @@ function Library:CreateWindow(title, gameName)
                     if Theme.AccentColor == Color3.fromRGB(0,0,0) then
                         Utility:TweenObject(label, {TextColor3 = Color3.fromRGB(255,255,255)}, 0.2)
                     end 
+					
+
     
                     coroutine.wrap(function()
                         while wait() do
                             label.BackgroundColor3 = Theme.AccentColor
                             label.TextColor3 = Theme.TextColor
+							local Y = select(2, Library:GetTextBounds(label.Text, label.Font, 14, Vector2.new(label.AbsoluteSize.X, math.huge)))
+							label.Size = UDim2.new(1, 0, 0, Y)
                         end
                     end)()
                     updateSectionFrame()
                     UpdateSize()
                     function labelFunctions:UpdateLabel(newText)
-                        if label.Text ~= "  "..newText then
-                            label.Text = "  "..newText
+                        if label.Text ~= " "..newText then
+                            label.Text = " "..newText
                         end
                     end	
                     return labelFunctions
