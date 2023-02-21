@@ -136,14 +136,6 @@ local ThemesList = {
 	"Serpent"
 }
 
-local themes = {
-    AccentColor = Color3.fromRGB(45, 45, 45),
-    Background = Color3.fromRGB(30, 30, 30),
-    TextColor = Color3.fromRGB(180, 180, 180),
-    ImageColor = Color3.fromRGB(255, 255, 255),
-    ElementColor = Color3.fromRGB(12, 12, 12)
-}
-
 local themeStyles = {
     Default = {
         AccentColor = Color3.fromRGB(45, 45, 45),
@@ -231,7 +223,7 @@ Themes:addDropdown("SelectedTheme", "Select Theme", "Select Theme to Auto Load",
 	print("Selected Theme:", Value)
 end)
 
-for theme, color in pairs(themes) do
+for theme, color in pairs(themeStyles.Default) do
     Themes:addColor(theme, theme, "Change your "..theme, color, function(color3)
         Library:ChangeColor(theme, color3)
     end)
