@@ -123,19 +123,6 @@ SaveManager:LoadAutoloadConfig()
 
 
 -- Themes Section--
-local ThemesList = {
-	"Default", 
-	"DarkTheme", 
-	"LightTheme", 
-	"BloodTheme", 
-	"GrapeTheme", 
-	"Ocean", 
-	"Midnight", 
-	"Sentinel", 
-	"Synapse", 
-	"Serpent"
-}
-
 local themeStyles = {
     Default = {
         AccentColor = Color3.fromRGB(45, 45, 45),
@@ -208,6 +195,10 @@ local themeStyles = {
         ElementColor = Color3.fromRGB(22, 29, 31)
     }
 }
+local ThemesList = {}
+for i,v in pairs(themeStyles) do
+	table.insert(ThemesList, i)
+end
 
 local ThemeSection = Tabs:addSection("Theme")
 local Themes = ThemeSection:newSection("Theme Settings", true)
