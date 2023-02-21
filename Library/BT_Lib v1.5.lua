@@ -1395,6 +1395,14 @@ function Library:CreateWindow(title, gameName)
 						TextBox.Text = Text;
 						Textbox.Value = TextBox.Text;
 						pcall(callback, Textbox.Value)
+						if Textbox.Changed then
+							Textbox.Changed();
+						end;
+					end;
+					
+					function Textbox:OnChanged(Func)
+						Textbox.Changed = Func;
+						Func();
 					end;
 					
 					Options[Idx] = Textbox
@@ -1590,6 +1598,10 @@ function Library:CreateWindow(title, gameName)
                         end
                     end)
 					
+					function Toggle:OnChanged(Func)
+						Toggle.Changed = Func;
+						Func();
+					end;					
 
                     function TogFunction:UpdateToggle(isTogOn)
                         isTogOn = isTogOn or toggle
@@ -1604,9 +1616,12 @@ function Library:CreateWindow(title, gameName)
                             img.ImageRectOffset = Vector2.new(940, 784)
                             pcall(callback, toggled)
                         end
-                    end
+						if Toggle.Changed then
+							Toggle.Changed();
+						end;
+                    end				
 					
-			function Toggle:SetValue(Bool)
+					function Toggle:SetValue(Bool)
                         Bool = Bool or toggle
                         if Bool then
                             toggled = true
@@ -1615,10 +1630,13 @@ function Library:CreateWindow(title, gameName)
                             pcall(callback, toggled)
                         else
                             toggled = false
-			    Toggle.Value = toggled;
+							Toggle.Value = toggled;
                             img.ImageRectOffset = Vector2.new(940, 784)
                             pcall(callback, toggled)
                         end
+						if Toggle.Changed then
+							Toggle.Changed();
+						end;
 					end;	
 					
 					Toggles[Idx] = Toggle;
@@ -1910,10 +1928,18 @@ function Library:CreateWindow(title, gameName)
                         end
                     end)
 					
+					function Slider:OnChanged(Func)
+						Slider.Changed = Func;
+						Func();
+					end;
+					
 					function Slider:SetValue(Str)
 						Slider.Value = Str;
 						togName.Text = slidInf.." - "..tostring(Slider.Value and math.floor((Slider.Value / maxvalue) * (maxvalue - minvalue) + minvalue) or 0)
 						pcall(callback, Slider.Value)
+						if Slider.Changed then
+							Slider.Changed();
+						end;
 					end;
 					Options[Idx] = Slider
                 end
@@ -2214,11 +2240,17 @@ function Library:CreateWindow(title, gameName)
                         end)()
                     end
 					
-		function Dropdown:SetValue(newText)
-			Dropdown.Value = newText;
-			itemTextbox.Text = dropname.." - "..newText
-			pcall(callback, Dropdown.Value)
-		end
+					function Dropdown:OnChanged(Func)
+						Dropdown.Changed = Func;
+						Func();
+					end;
+					
+					function Dropdown:SetValue(newText)
+						Dropdown.Value = newText;
+						itemTextbox.Text = dropname.." - "..newText
+						pcall(callback, Dropdown.Value)
+						if Dropdown.Changed then Dropdown.Changed() end
+					end
 					
                     function DropFunction:Refresh(newList)
                         newList = newList or {}
@@ -2263,7 +2295,7 @@ function Library:CreateWindow(title, gameName)
                                 if not focusing then
                                     opened = false
                                     callback(v)
-				    Dropdown.Value = v
+									Dropdown.Value = v
                                     itemTextbox.Text = dropname.." - "..v
                                     dropFrame:TweenSize(UDim2.new(1, 0, 0, 25), 'InOut', 'Linear', 0.08)
                                     wait(0.1)
@@ -2320,7 +2352,7 @@ function Library:CreateWindow(title, gameName)
                         end
                     end
 					
-		    Options[Idx] = Dropdown
+					Options[Idx] = Dropdown
 					
                     return DropFunction
                 end
@@ -2530,10 +2562,10 @@ function Library:CreateWindow(title, gameName)
                 end
 
                 function Elements:addColor(Idx, colText, colInf, defcolor, callback)
-			local ColorPicker = {
-				Value = defcolor;
-				Type = 'ColorPicker';
-			};
+					local ColorPicker = {
+						Value = defcolor;
+						Type = 'ColorPicker';
+					};
                     colText = colText or "ColorPicker"
                     callback = callback or function() end
                     defcolor = ColorPicker.Value or Color3.fromRGB(1,1,1)
@@ -2964,32 +2996,32 @@ function Library:CreateWindow(title, gameName)
                             if colorpicker then colorpicker = false end
                         end
                     end)
-                    setcolor({h,s,v})
-					
+                    setcolor({h,s,v})			
+				
 			    function ColorPicker:SetValue(prope,color)
-				if prope == "Background" then
-				    Theme.Background = color
-				elseif prope == "AccentColor" then
-				    Theme.AccentColor = color
-				elseif prope == "ImageColor" then
-				    Theme.ImageColor = color
-				elseif prope == "TextColor" then
-				    Theme.TextColor = color
-				elseif prope == "ElementColor" then
-				    Theme.ElementColor = color
-				end
+					if prope == "Background" then
+						Theme.Background = color
+					elseif prope == "AccentColor" then
+						Theme.AccentColor = color
+					elseif prope == "ImageColor" then
+						Theme.ImageColor = color
+					elseif prope == "TextColor" then
+						Theme.TextColor = color
+					elseif prope == "ElementColor" then
+						Theme.ElementColor = color
+					end
 			    end
 
-			Options[Idx] = ColorPicker;
+				Options[Idx] = ColorPicker;
                 end
                 
                 function Elements:addParagraph(Idx, pTitle, pTable)
-		    local Paragraph = {
-			Value = pTable,
-			Type = "Paragraph"
-		    }
+					local Paragraph = {
+						Value = pTable,
+						Type = "Paragraph"
+					}
                     local logcatfunc = {}
-		    local pTitle = pTitle or "• Paragraph •"
+					local pTitle = pTitle or "• Paragraph •"
                     local Title = Instance.new("TextLabel")
                     local titleCorner = Instance.new("UICorner")
                     local Frame = Instance.new("ScrollingFrame")
@@ -3044,32 +3076,40 @@ function Library:CreateWindow(title, gameName)
 					end)
                     
                     coroutine.wrap(function()
-			while wait() do
-				Title.BackgroundColor3 = Theme.AccentColor
-				Title.TextColor3 = Theme.TextColor
-				Frame.BackgroundColor3 = Theme.ElementColor
-				Frame.ScrollBarImageColor3 = Theme.ImageColor
-				TextLabel.TextColor3 = Theme.TextColor
-			end
+						while wait() do
+							Title.BackgroundColor3 = Theme.AccentColor
+							Title.TextColor3 = Theme.TextColor
+							Frame.BackgroundColor3 = Theme.ElementColor
+							Frame.ScrollBarImageColor3 = Theme.ImageColor
+							TextLabel.TextColor3 = Theme.TextColor
+						end
                     end)()
                     
-			updateSectionFrame()
-			UpdateSize()
+					updateSectionFrame()
+					UpdateSize()
+									
+					function logcatfunc:Refresh(nTable)
+						if TextLabel.Text ~= table.concat(nTable, "\n") then
+							TextLabel.Text = table.concat(nTable, "\n")
+						end
+					end
+					
+					function Paragraph:OnChanged(Func)
+						Paragraph.Changed = Func;
+						Func();
+					end;
 							
-		    function logcatfunc:Refresh(nTable)
-			if TextLabel.Text ~= table.concat(nTable, "\n") then
-				TextLabel.Text = table.concat(nTable, "\n")
-			end
-                    end
-					
-		    function Paragraph:SetValue(nTable)
-			if TextLabel.Text ~= table.concat(nTable, "\n") then
-				TextLabel.Text = table.concat(nTable, "\n")
-				Paragraph.Value = nTable
-			end
-                    end
-					
-		    Options[Idx] = Paragraph;
+					function Paragraph:SetValue(nTable)
+						if TextLabel.Text ~= table.concat(nTable, "\n") then
+							TextLabel.Text = table.concat(nTable, "\n")
+							Paragraph.Value = nTable
+						end
+						if Paragraph.Changed then
+							Paragraph.Changed();
+						end;
+					end
+							
+					Options[Idx] = Paragraph;
 					
                     return logcatfunc
                 end
