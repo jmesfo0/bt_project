@@ -3124,7 +3124,7 @@ function Library:CreateWindow(title, gameName)
                     label.BorderSizePixel = 0
                     label.ClipsDescendants = true
                     label.Text = title
-                    label.Size = UDim2.new(1, 0, 0, 30)
+                    label.Size = UDim2.new(1, 0, 0, 25)
                     label.Font = Enum.Font.SourceSansBold
                     label.Text = "  "..title
                     label.RichText = true
