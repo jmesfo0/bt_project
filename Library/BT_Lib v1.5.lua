@@ -17,12 +17,11 @@ local Objects = {}
 local Toggles = {};
 local Options = {};
 
-local Theme = getgenv().Theme or "Default"
-local MenuToggle = getgenv().MenuToggle or Enum.KeyCode.End
-
 getgenv().Toggles = Toggles;
 getgenv().Options = Options;
 
+local Theme = getgenv().Theme or "Default"
+local MenuToggle = getgenv().MenuToggle or Enum.KeyCode.End
 
 function Library:AttemptSave()
     if Library.SaveManager then
@@ -1950,14 +1949,14 @@ function Library:CreateWindow(title, gameName)
                 end
 
                 function Elements:addDropdown(Idx, dropname, dropinf, default, list, callback)
-			local Dropdown = {
-				Value = default;
-				Values = list;
-				Type = 'Dropdown';
-			};
+					local Dropdown = {
+						Value = default;
+						Values = list;
+						Type = 'Dropdown';
+					};
                     local DropFunction = {}
                     dropname = dropname or "Dropdown"
-		    default = default or "Select"
+					default = Dropdown.Value or "Select"
                     list = list or {}
                     dropinf = dropinf or "Dropdown info"
                     callback = callback or function() end   
@@ -2245,18 +2244,6 @@ function Library:CreateWindow(title, gameName)
                         end)()
                     end
 					
-					function Dropdown:OnChanged(Func)
-						Dropdown.Changed = Func;
-						Func();
-					end;
-					
-					function Dropdown:SetValue(newText)
-						Dropdown.Value = newText;
-						itemTextbox.Text = dropname.." - "..newText
-						pcall(callback, Dropdown.Value)
-						if Dropdown.Changed then Dropdown.Changed() end
-					end
-					
                     function DropFunction:Refresh(newList)
                         newList = newList or {}
                         for i,v in next, dropFrame:GetChildren() do
@@ -2356,6 +2343,18 @@ function Library:CreateWindow(title, gameName)
                             UpdateSize()
                         end
                     end
+					
+					function Dropdown:OnChanged(Func)
+						Dropdown.Changed = Func;
+						Func();
+					end;
+					
+					function Dropdown:SetValue(newText)
+						Dropdown.Value = newText;
+						itemTextbox.Text = dropname.." - "..newText
+						pcall(callback, Dropdown.Value)
+						if Dropdown.Changed then Dropdown.Changed() end
+					end
 					
 					Options[Idx] = Dropdown
 					
