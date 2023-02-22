@@ -17,11 +17,14 @@ local Objects = {}
 local Toggles = {};
 local Options = {};
 
+local MenuToggle = Enum.KeyCode.End;
+
 getgenv().Toggles = Toggles;
 getgenv().Options = Options;
+getgenv().MenuToggle = MenuToggle;
 
-local Theme = getgenv().Theme or "Default"
-local MenuToggle = getgenv().MenuToggle or Enum.KeyCode.End
+local Theme = "Default"
+local MenuToggle = Enum.KeyCode.End
 
 function Library:AttemptSave()
     if Library.SaveManager then
@@ -236,12 +239,6 @@ function Library:CreateWindow(title, gameName)
     ScreenGui.Name = LibName
     ScreenGui.Parent = game.CoreGui
     ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-    game:GetService("UserInputService").InputBegan:connect(function(input, hide) 
-        if input.KeyCode == MenuToggle then 
-            game.CoreGui[LibName].Enabled = not game.CoreGui[LibName].Enabled
-        end
-    end)
 
     CoverBT.Name = "CoverBT"
     CoverBT.Parent = ScreenGui
@@ -498,11 +495,18 @@ function Library:CreateWindow(title, gameName)
             Theme.ElementColor = color
         end
     end
+	
 	function Library:ToggleUI()
 	    if game.CoreGui[LibName] then
 		game.CoreGui[LibName].Enabled = not game.CoreGui[LibName].Enabled
 	    end
 	end
+	
+    game:GetService("UserInputService").InputBegan:connect(function(input, hide) 
+        if input.KeyCode == getgenv().MenuToggle then 
+            Library:ToggleUI()
+        end
+    end)
 
 	function Library:DestroyUI()
 	    if game.CoreGui[LibName] then
