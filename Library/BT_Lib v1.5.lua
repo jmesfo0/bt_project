@@ -1417,7 +1417,6 @@ function Library:CreateWindow(title, gameName)
 						Value = default or false;
 						Type = 'Toggle';
 					};
-                    local TogFunction = {}
                     tname = tname or "Toggle"
                     nTip = nTip or "Prints Current Toggle State"
                     callback = callback or function() end
@@ -1605,25 +1604,7 @@ function Library:CreateWindow(title, gameName)
 					function Toggle:OnChanged(Func)
 						Toggle.Changed = Func;
 						Func();
-					end;					
-
-                    function TogFunction:UpdateToggle(isTogOn)
-                        isTogOn = isTogOn or toggle
-                        if isTogOn then
-                            toggled = true
-							Toggle.Value = toggled;
-                            img.ImageRectOffset = Vector2.new(4, 836)
-                            pcall(callback, toggled)
-                        else
-                            toggled = false
-							Toggle.Value = toggled;
-                            img.ImageRectOffset = Vector2.new(940, 784)
-                            pcall(callback, toggled)
-                        end
-						if Toggle.Changed then
-							Toggle.Changed();
-						end;
-                    end				
+					end;								
 					
 					function Toggle:SetValue(Bool)
                         Bool = Bool or toggle
@@ -1645,7 +1626,7 @@ function Library:CreateWindow(title, gameName)
 					
 					Toggles[Idx] = Toggle;
 					
-                    return TogFunction
+                    return Toggle
                 end
 
                 function Elements:addSlider(Idx, slidInf, slidTip, minvalue, maxvalue, startVal, callback)
@@ -1946,6 +1927,8 @@ function Library:CreateWindow(title, gameName)
 						end;
 					end;
 					Options[Idx] = Slider
+					
+					return Slider
                 end
 
                 function Elements:addDropdown(Idx, dropname, dropinf, default, list, callback)
@@ -1954,7 +1937,6 @@ function Library:CreateWindow(title, gameName)
 						Values = list;
 						Type = 'Dropdown';
 					};
-                    local DropFunction = {}
                     dropname = dropname or "Dropdown"
 					default = Dropdown.Value or "Select"
                     list = list or {}
@@ -2244,7 +2226,7 @@ function Library:CreateWindow(title, gameName)
                         end)()
                     end
 					
-                    function DropFunction:Refresh(newList)
+                    function Dropdown:Refresh(newList)
                         newList = newList or {}
                         for i,v in next, dropFrame:GetChildren() do
                             if v.Name == "optionSelect" then
@@ -2358,7 +2340,7 @@ function Library:CreateWindow(title, gameName)
 					
 					Options[Idx] = Dropdown
 					
-                    return DropFunction
+                    return Dropdown
                 end
 
                 function Elements:addKeybind(keytext, keyinf, first, callback)
@@ -3017,6 +2999,9 @@ function Library:CreateWindow(title, gameName)
 			    end
 
 				Options[Idx] = ColorPicker;
+				
+				return ColorPicker
+				
                 end
                 
                 function Elements:addParagraph(Idx, pTitle, pTable)
@@ -3024,7 +3009,6 @@ function Library:CreateWindow(title, gameName)
 						Value = pTable,
 						Type = "Paragraph"
 					}
-                    local logcatfunc = {}
 					local pTitle = pTitle or "• Paragraph •"
                     local Title = Instance.new("TextLabel")
                     local titleCorner = Instance.new("UICorner")
@@ -3092,7 +3076,7 @@ function Library:CreateWindow(title, gameName)
 					updateSectionFrame()
 					UpdateSize()
 									
-					function logcatfunc:Refresh(nTable)
+					function Paragraph:Refresh(nTable)
 						if TextLabel.Text ~= table.concat(nTable, "\n") then
 							TextLabel.Text = table.concat(nTable, "\n")
 						end
@@ -3115,7 +3099,7 @@ function Library:CreateWindow(title, gameName)
 							
 					Options[Idx] = Paragraph;
 					
-                    return logcatfunc
+                    return Paragraph
                 end
 
                 function Elements:addLabel(title)
