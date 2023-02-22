@@ -1410,6 +1410,8 @@ function Library:CreateWindow(title, gameName)
 					end;
 					
 					Options[Idx] = Textbox
+					
+					return Textbox
                 end
 
                 function Elements:addToggle(Idx, tname, nTip, default, callback)
