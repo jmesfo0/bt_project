@@ -3054,7 +3054,7 @@ function Library:CreateWindow(title, gameName)
                     TextLabel.BackgroundTransparency = 1.000
                     TextLabel.BorderSizePixel = 0
 					TextLabel.Position = UDim2.new(0, 3, 0, 0)
-                    TextLabel.Size = UDim2.new(1, -10, 0, string.len(TextLabel.Text))
+                    TextLabel.Size = UDim2.new(1, -10, 0, 150)
                     TextLabel.Font = Enum.Font.Code
                     TextLabel.TextColor3 = Theme.TextColor
                     TextLabel.TextSize = 12.000
