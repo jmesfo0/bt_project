@@ -3044,7 +3044,7 @@ function Library:CreateWindow(title, gameName)
                     Frame.Active = true
                     Frame.ScrollBarThickness = 8
                     Frame.ScrollBarImageColor3 = Theme.ImageColor
-		    Frame.CanvasSize = UDim2.new(0, 0, 0, #Paragraph.Value)
+		    Frame.CanvasSize = UDim2.new(0, 0, 0, string.len(TextLabel.Text))
                     
                     UICorner.Parent = Frame
                     UICorner.CornerRadius = UDim.new(0, 4)
@@ -3054,7 +3054,7 @@ function Library:CreateWindow(title, gameName)
                     TextLabel.BackgroundTransparency = 1.000
                     TextLabel.BorderSizePixel = 0
 		    TextLabel.Position = UDim2.new(0, 3, 0, 0)
-                    TextLabel.Size = UDim2.new(1, -10, 0, #Paragraph.Value)
+                    TextLabel.Size = UDim2.new(1, -10, 0, string.len(TextLabel.Text))
                     TextLabel.Font = Enum.Font.Code
                     TextLabel.TextColor3 = Theme.TextColor
                     TextLabel.TextSize = 12.000
@@ -3065,8 +3065,8 @@ function Library:CreateWindow(title, gameName)
                     TextLabel.TextYAlignment = Enum.TextYAlignment.Top
 					
 		   TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-			Frame.CanvasSize = UDim2.new(0, 0, 0, #Paragraph.Value)
-			TextLabel.Size = UDim2.new(1, -10, 0, #Paragraph.Value)
+			Frame.CanvasSize = UDim2.new(0, 0, 0, string.len(TextLabel.Text))
+			TextLabel.Size = UDim2.new(1, -10, 0, string.len(TextLabel.Text))
 		    end)
                     
                     coroutine.wrap(function()
