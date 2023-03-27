@@ -3065,8 +3065,8 @@ function Library:CreateWindow(title, gameName)
                     TextLabel.TextYAlignment = Enum.TextYAlignment.Top
 					
 					TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-						Frame.CanvasSize = UDim2.new(0, 0, 0, string.len(TextLabel.Text) - 670)
-						TextLabel.Size = UDim2.new(1, -10, 0, string.len(TextLabel.Text) - 670)
+						Frame.CanvasSize = UDim2.new(0, 0, 0, string.len(TextLabel.Text) / 1.5)
+						TextLabel.Size = UDim2.new(1, -10, 0, string.len(TextLabel.Text) / 1.5)
 					end)
                     
                     coroutine.wrap(function()
