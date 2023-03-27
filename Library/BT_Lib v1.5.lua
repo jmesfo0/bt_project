@@ -3044,7 +3044,7 @@ function Library:CreateWindow(title, gameName)
                     Frame.Active = true
                     Frame.ScrollBarThickness = 8
                     Frame.ScrollBarImageColor3 = Theme.ImageColor
-					Frame.CanvasSize = UDim2.new(0, 0, 0, string.len(TextLabel.Text))
+					Frame.CanvasSize = UDim2.new(0, 0, 0, 150)
                     
                     UICorner.Parent = Frame
                     UICorner.CornerRadius = UDim.new(0, 4)
