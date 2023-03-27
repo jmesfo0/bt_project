@@ -3011,11 +3011,11 @@ function Library:CreateWindow(title, gameName)
                 end
                 
                 function Elements:addParagraph(Idx, pTitle, pTable)
-		    local Paragraph = {
-			     Value = pTable,
-			     Type = "Paragraph"
-		    }
-		    local pTitle = pTitle or "• Paragraph •"
+					local Paragraph = {
+						Value = pTable,
+						Type = "Paragraph"
+					}
+					local pTitle = pTitle or "• Paragraph •"
                     local Title = Instance.new("TextLabel")
                     local titleCorner = Instance.new("UICorner")
                     local Frame = Instance.new("ScrollingFrame")
@@ -3044,7 +3044,7 @@ function Library:CreateWindow(title, gameName)
                     Frame.Active = true
                     Frame.ScrollBarThickness = 8
                     Frame.ScrollBarImageColor3 = Theme.ImageColor
-		    Frame.CanvasSize = UDim2.new(0, 0, 0, string.len(TextLabel.Text))
+					Frame.CanvasSize = UDim2.new(0, 0, 0, string.len(TextLabel.Text))
                     
                     UICorner.Parent = Frame
                     UICorner.CornerRadius = UDim.new(0, 4)
@@ -3053,57 +3053,57 @@ function Library:CreateWindow(title, gameName)
                     TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
                     TextLabel.BackgroundTransparency = 1.000
                     TextLabel.BorderSizePixel = 0
-		    TextLabel.Position = UDim2.new(0, 3, 0, 0)
+					TextLabel.Position = UDim2.new(0, 3, 0, 0)
                     TextLabel.Size = UDim2.new(1, -10, 0, string.len(TextLabel.Text))
                     TextLabel.Font = Enum.Font.Code
                     TextLabel.TextColor3 = Theme.TextColor
                     TextLabel.TextSize = 12.000
                     TextLabel.Text = table.concat(Paragraph.Value, "\n")
-		    TextLabel.TextScaled = false
-		    TextLabel.TextWrapped = true
+					TextLabel.TextScaled = false
+					TextLabel.TextWrapped = true
                     TextLabel.TextXAlignment = Enum.TextXAlignment.Left
                     TextLabel.TextYAlignment = Enum.TextYAlignment.Top
 					
-		   TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
-			Frame.CanvasSize = UDim2.new(0, 0, 0, string.len(TextLabel.Text))
-			TextLabel.Size = UDim2.new(1, -10, 0, string.len(TextLabel.Text))
-		    end)
+					TextLabel:GetPropertyChangedSignal("Text"):Connect(function()
+						Frame.CanvasSize = UDim2.new(0, 0, 0, string.len(TextLabel.Text) - 50)
+						TextLabel.Size = UDim2.new(1, -10, 0, string.len(TextLabel.Text) - 50)
+					end)
                     
                     coroutine.wrap(function()
-			while wait() do
-				Title.BackgroundColor3 = Theme.AccentColor
-				Title.TextColor3 = Theme.TextColor
-				Frame.BackgroundColor3 = Theme.ElementColor
-				Frame.ScrollBarImageColor3 = Theme.ImageColor
-				TextLabel.TextColor3 = Theme.TextColor
-			end
+						while wait() do
+							Title.BackgroundColor3 = Theme.AccentColor
+							Title.TextColor3 = Theme.TextColor
+							Frame.BackgroundColor3 = Theme.ElementColor
+							Frame.ScrollBarImageColor3 = Theme.ImageColor
+							TextLabel.TextColor3 = Theme.TextColor
+						end
                     end)()
                     
-			updateSectionFrame()
-			UpdateSize()
-
-			function Paragraph:Refresh(nTable)
-				if TextLabel.Text ~= table.concat(nTable, "\n") then
-					TextLabel.Text = table.concat(nTable, "\n")
-				end
-			end
-
-			function Paragraph:OnChanged(Func)
-				Paragraph.Changed = Func;
-				Func();
-			end;
-
-			function Paragraph:SetValue(nTable)
-				if TextLabel.Text ~= table.concat(nTable, "\n") then
-					TextLabel.Text = table.concat(nTable, "\n")
-					Paragraph.Value = nTable
-				end
-				if Paragraph.Changed then
-					Paragraph.Changed();
-				end;
-			end
-
-			Options[Idx] = Paragraph;
+					updateSectionFrame()
+					UpdateSize()
+									
+					function Paragraph:Refresh(nTable)
+						if TextLabel.Text ~= table.concat(nTable, "\n") then
+							TextLabel.Text = table.concat(nTable, "\n")
+						end
+					end
+					
+					function Paragraph:OnChanged(Func)
+						Paragraph.Changed = Func;
+						Func();
+					end;
+							
+					function Paragraph:SetValue(nTable)
+						if TextLabel.Text ~= table.concat(nTable, "\n") then
+							TextLabel.Text = table.concat(nTable, "\n")
+							Paragraph.Value = nTable
+						end
+						if Paragraph.Changed then
+							Paragraph.Changed();
+						end;
+					end
+							
+					Options[Idx] = Paragraph;
 					
                     return Paragraph
                 end
