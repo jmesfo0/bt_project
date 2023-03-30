@@ -206,9 +206,9 @@ local SaveManager = {} do
 		--section:AddDivider()
 
 		section:addButton('Save config', 'Info', function()
-			local name = Options.SaveManager_ConfigName.Value or ""
+			local name = game.Players.LocalPlayer.Name.."-"..Options.SaveManager_ConfigName.Value or ""
 
-			if name:gsub(' ', '') == '' then 
+			if name:gsub(' ', '') == '' or name == '' then 
 				return self.Library:Notify('Error', 'Invalid config name (empty)', 2)
 			end
 
@@ -225,7 +225,7 @@ local SaveManager = {} do
 			Options.SaveManager_ConfigList:SetValue(nil)
 		end)
 		section:addButton('Load config', 'Info', function()
-			local name = Options.SaveManager_ConfigList.Value
+			local name = game.Players.LocalPlayer.Name.."-"..Options.SaveManager_ConfigList.Value
 
 			local success, err = self:Load(name)
 			if not success then
@@ -236,7 +236,7 @@ local SaveManager = {} do
 		end)
 
 		section:addButton('Overwrite config', 'Info', function()
-			local name = Options.SaveManager_ConfigList.Value
+			local name = game.Players.LocalPlayer.Name.."-"..Options.SaveManager_ConfigList.Value
 
 			local success, err = self:Save(name)
 			if not success then
@@ -247,7 +247,7 @@ local SaveManager = {} do
 		end)
 		
 		section:addButton('Autoload config', 'Info', function()
-			local name = Options.SaveManager_ConfigList.Value
+			local name = game.Players.LocalPlayer.Name.."-"..Options.SaveManager_ConfigList.Value
 			writefile(self.Folder .. '/settings/autoload.txt', name)
 			SaveManager.AutoloadLabel:UpdateLabel('Current autoload config: ' .. name)
 			self.Library:Notify('Auto Load', string.format('Set %q to auto load', name))
