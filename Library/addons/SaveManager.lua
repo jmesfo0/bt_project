@@ -154,7 +154,7 @@ local SaveManager = {} do
 
 		local out = {}
 		for i = 1, #list do
-			local file = list[i]
+			local file = list[i]:gsub:(game.Players.LocalPlayer.Name, "")
 			if file:sub(-5) == '.json' then
 				-- i hate this but it has to be done ...
 
