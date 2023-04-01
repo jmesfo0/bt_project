@@ -2340,7 +2340,7 @@ function Library:CreateWindow(title, gameName)
 					function Dropdown:SetValue(newText)
 						Dropdown.Value = newText;
 						itemTextbox.Text = dropname.." - "..newText
-						pcall(callback, Dropdown.Value)
+						pcall(callback(Dropdown.Value))
 						if Dropdown.Changed then Dropdown.Changed() end
 					end
 					
