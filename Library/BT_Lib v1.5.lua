@@ -14,7 +14,7 @@ local inout = Enum.EasingDirection.InOut
 local Utility = {}
 local Objects = {}
 
-local Toggles = {};s
+local Toggles = {};
 local Options = {};
 
 local MenuToggle = Enum.KeyCode.End;
@@ -2186,7 +2186,7 @@ function Library:CreateWindow(title, gameName)
                             if not focusing then
                                 opened = false
                                 callback(v)
-				Dropdown.Value = v
+								Dropdown.Value = v
                                 itemTextbox.Text = dropname.." - "..v
                                 dropFrame:TweenSize(UDim2.new(1, 0, 0, 25), 'InOut', 'Linear', 0.08)
                                 wait(0.1)
@@ -2275,7 +2275,7 @@ function Library:CreateWindow(title, gameName)
                                 if not focusing then
                                     opened = false
                                     callback(v)
-				    Dropdown.Value = v
+									Dropdown.Value = v
                                     itemTextbox.Text = dropname.." - "..v
                                     dropFrame:TweenSize(UDim2.new(1, 0, 0, 25), 'InOut', 'Linear', 0.08)
                                     wait(0.1)
